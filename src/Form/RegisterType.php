@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegisterType extends AbstractType
 {
@@ -26,7 +28,9 @@ class RegisterType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Votre prénom ',
                     'class' => 'mb-4  '
-                ]
+                ],
+                'constraints' => new Length(min: 2, max: 30),
+                'constraints' => new NotBlank()
             ]) //input firstname
             ->add('lastname',  TextType::class, [
 
@@ -37,7 +41,8 @@ class RegisterType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Votre nom  ',
                     'class' => 'mb-4  '
-                ]
+                ],
+                'constraints' => new NotBlank()
             ]) //input firstname
             ->add('email', EmailType::class, [
                 'label' => "Votre email",
