@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegisterType extends AbstractType
 {
@@ -42,7 +43,8 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Votre nom  ',
                     'class' => 'mb-4  '
                 ],
-                'constraints' => new NotBlank()
+                'constraints' => new NotBlank(),
+                'constraints' => new Length(min: 2, max: 30)
             ]) //input firstname
             ->add('email', EmailType::class, [
                 'label' => "Votre email",
@@ -52,15 +54,29 @@ class RegisterType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Un email valide ',
                     'class' => 'mb-4  '
-                ]
+                ],
+                'constraints' => new NotBlank(),
+
             ]) //input email 
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'label' => 'votre mot de passe',
                 'invalid_message' => 'le mot de passe et la confimation doivent être identitique',
                 'required' => true,
-                'first_options' => ['label' => 'mot de passe '],
-                'second_options' => ['label' => 'confimer votre mot de passe']
+                'first_options' => [
+                    'label' => 'vérifiez que votre mot de passe contienne au moins 8 caractères, dont au moins une minuscule, une majuscule et un chiffre',
+                    'attr' => [
+                        'placeholher' => 'Votre mot de passe à saisir'
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'confimer votre mot de passe',
+                    'attr' => ['placeholder' => 'merci de saisir votre confirmation de mot de passe']
+                ],
+                // 'constraints' => new Length(min: 7),
+                'constraints' => new NotBlank(),
+                'constraints' => new Regex('/(?=\P{Ll}*\p{Ll})(?=\P{Lu}*\p{Lu})(?=\P{N}*\p{N})(?=[\p{L}\p{N}]*[^\p{L}\p{N}])[\s\S]{8,}/'),
+                'constraints' => new Length(min: 7),
             ]) //input password
 
 
