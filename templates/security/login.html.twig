@@ -10,7 +10,7 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            You are logged in as {{ app.user.userIdentifier }}, <a href="">Logout</a>
         </div>
     {% endif %}
     {# <div class="container w-50 container-sm"> #}
@@ -21,11 +21,12 @@
     <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Mot de Passe</label>
     <input type="password" name="_password" id="inputPassword" class="form-control mb-4" autocomplete="current-password" required >
-
+     
     <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-          
+           value="{{ csrf_token('authenticate') }}"    
     />
+
+     {# <input type="hidden" name="_target_path" value="{{ path('account') }}"/> #}
     
     {# </div> #}
 

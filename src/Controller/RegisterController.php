@@ -21,11 +21,13 @@ class RegisterController extends AbstractController
     }
 
 
-
-
     #[Route('/inscription', name: 'inscription')]
     public function index(Request $request, UserPasswordHasherInterface $hasher): Response
     {
+
+        if ($this->getUser()) {
+            return $this->redirectToRoute('account');
+        }
         $user = new User();
         $form = $this->createForm(
             RegisterType::class,
