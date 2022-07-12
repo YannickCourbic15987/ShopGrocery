@@ -14,7 +14,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href={{ asset('asset/css/bootstrap.min.css') }} rel="stylesheet">
+    {% block stylesheets %}
+        
     <link rel="stylesheet" href="{{asset('asset/css/shopgrocery.css')}}">
+    {% endblock %}
     <script src="https://kit.fontawesome.com/2bb89bf154.js" crossorigin="anonymous"></script>
 
     <style>
