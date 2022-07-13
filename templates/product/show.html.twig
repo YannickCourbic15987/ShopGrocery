@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+{{product.name}}
+{% endblock %}
+
+{% block content %}
+
+
+{# {{dump(product)}} #}
+
+<div class="row">
+<div class="col-md-5 ">
+<div class="bg-info p-1  rounded">
+<img src="../../uploads/{{product.illustration}}" alt="{{product.name}}" class="img-fluid rounded-circle ">
+</div>
+</div>
+<div class="col-md-7 my-auto">
+<h3 class="text-capitalize ">{{product.name}}</h3>
+<p class="">{{product.subtitle}}</p>
+<hr>
+<p>{{product.description}}</p>
+<p>  {{(product.price /100)| number_format(2 , ',' , '.')}} €</p>
+</hr>
+<a href="" class="btn btn-info">Ajouter au panier </a>
+</div>
+</div>
+
+{% endblock %}
