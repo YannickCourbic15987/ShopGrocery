@@ -4,11 +4,16 @@
 
 {% block content %}
 
-<div class="container d-flex ">
-<h3 class="text-capitalize mb-5 mr-5">Nos produits </h3>
-<h3 > Filtrer </h3>
 
+
+<div class="row">
+<div class="col-md-3">
+<h3>Filtrer</h3>
+{# colonne de filtre #}
 </div>
+<div class="col-md-9">
+<h3 class="text-capitalize mb-5 mr-5">Nos produits </h3>
+
     <div class="row">
 {% for product in products  %}
     <div class="col-md-4 mb-5  mx-auto">
@@ -32,5 +37,8 @@
 {% endfor %}
     
     </div>
+</div>
+</div>
+
 
 {% endblock %}
