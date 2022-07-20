@@ -47,9 +47,12 @@ class ProductController extends AbstractController
                     'category' => $request->request->get('category'),
                 ]
             ),
-            'categories' => $categories->find()
+            'categories' => $categories->findAll()
         ]);
     }
+
+
+
 
     #[Route('/produit/{slug}', name: 'product')]
 
