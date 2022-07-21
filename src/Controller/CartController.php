@@ -28,13 +28,16 @@ class CartController extends AbstractController
     #[Route('/mon-panier', name: 'cart')]
     public function index(Cart $cart): Response
     {
+        // dd($cart);
         $cartComplete = [];
 
-        foreach ($cart->getTo() as $id => $quantity) {
-            $cartComplete[] = [
-                'product' => $this->manager->getRepository(Product::class)->findOneById($id),
-                'quantity' => $quantity
-            ];
+        if ($cart->getTo() !== false) {
+            foreach ($cart->getTo() as $id => $quantity) {
+                $cartComplete[] = [
+                    'product' => $this->manager->getRepository(Product::class)->findOneById($id),
+                    'quantity' => $quantity
+                ];
+            }
         }
 
         // dd($cartComplete);
@@ -57,5 +60,19 @@ class CartController extends AbstractController
         $cart->removeTo();
 
         return $this->redirectToRoute('products');
+    }
+    #[Route('/cart/delete/{id}', name: 'delete_to_cart')]
+    public function deleteTo(Cart $cart, $id): Response
+    {
+        $cart->deleteTo($id);
+
+        return $this->redirectToRoute('cart');
+    }
+    #[Route('/cart/less/{id}', name: 'less_to_cart')]
+    public function less(Cart $cart, $id): Response
+    {
+        $cart->less($id);
+
+        return $this->redirectToRoute('cart');
     }
 }

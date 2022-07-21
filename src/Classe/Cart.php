@@ -41,7 +41,11 @@ class Cart
     {
         $session_get = $this->stack->getSession();
 
-        return $session_get->get('cart');
+        if (!is_null($session_get->get('cart'))) {
+            return $session_get->get('cart');
+        } else {
+            return false;
+        }
     }
 
 
@@ -49,6 +53,27 @@ class Cart
     {
         $session_remove = $this->stack->getSession();
         return $session_remove->remove('cart');
+    }
+
+    public function deleteTo($id)
+    {
+        $session_delete = $this->stack->getSession();
+        $cart = $session_delete->get('cart', []);
+        unset($cart[$id]);
+        return $session_delete->set('cart', $cart);
+    }
+
+    public function less($id)
+    {
+        $session_less = $this->stack->getSession();
+        $cart = $session_less->get('cart', []);
+        if ($cart[$id] > 1) {
+            $cart[$id]--;
+        } else {
+            unset($cart[$id]);
+        }
+
+        return $session_less->set('cart', $cart);
     }
 
     // public function remove()
