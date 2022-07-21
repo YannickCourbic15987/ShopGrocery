@@ -40,7 +40,8 @@ class Cart
     public function getTo()
     {
         $session_get = $this->stack->getSession();
-        return dd($session_get->get('cart'));
+
+        return $session_get->get('cart');
     }
 
 
