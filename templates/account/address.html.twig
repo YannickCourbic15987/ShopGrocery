@@ -39,12 +39,10 @@
 								-
 								{{address.country}}
 							</p>
-							<a href="#" class="btn btn-primary">Modifier</a>
-							<a href="#" class="btn btn-danger">supprimer</a>
+							<a href="{{path('account_address_mod' , {'id' : address.id})}}" class="btn btn-primary">Modifier</a>
+							<a href="{{path('account_address_sup' , {'id' : address.id})}}" class="btn btn-danger">supprimer</a>
 						</div>
 					</div>
-
-
 				</div>
 
 			{% endfor %}

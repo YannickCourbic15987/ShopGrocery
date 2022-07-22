@@ -73,7 +73,9 @@ class AddressType extends AbstractType
                     'placeholder' => 'numéro de télèphone'
                 ]
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'valider'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
