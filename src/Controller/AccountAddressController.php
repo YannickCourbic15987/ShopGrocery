@@ -47,4 +47,25 @@ class AccountAddressController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    #[Route('/compte/modifier-une-adresse/{id}', name: 'account_address_mod')]
+    public function modAddress(Request $request, $id): Response
+    {
+        $address = $this->manager;
+
+        $form = $this->createForm(AddressType::class, $address);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $address->setUser($this->getUser());
+            $this->manager->persist($address);
+            $this->manager->flush();
+            // dd($address);
+            return $this->redirectToRoute('account_address');
+        }
+
+        // dd($this->getUser());
+        return $this->render('account/address_add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
