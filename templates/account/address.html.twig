@@ -5,31 +5,50 @@
 {% endblock %}
 
 {% block content %}
-<button class ="btn btn-primary float-right mt-5">
-<i class="fa-solid fa-plus"></i>
-<a href="{{path('account_address_add')}}" class="link text-white"> Adresse</a>
-</button>
- <h1 class="text-secondary">
- Mes Adresses de livraisons
-</h1>
-<p class="text-info">
-c'est dans cet espace que vous allez pouvoir gérer toute vos adresses
-</p>
-{% if app.user.addresses | length == 0 %}
+	<button class="btn btn-primary float-right mt-5">
+		<i class="fa-solid fa-plus"></i>
+		<a href="{{path('account_address_add')}}" class="link text-white">
+			Adresse</a>
+	</button>
+	<h1 class="text-secondary">
+		Mes Adresses de livraisons
+	</h1>
+	<p class="text-info">
+		c'est dans cet espace que vous allez pouvoir gérer toute vos adresses
+	</p>
+	{% if app.user.addresses | length == 0 %}
 
-	<p class = "alert alert-warning ">
-	Vous n'avez pas encore ajouté d'adresse dans votre compte client. 
-	 Pour en ajouter une , veuillez <a href="{{path('account_address_add')}}">cliquez ici</a>
-	</p> 
-	
+		<p class="alert alert-warning ">
+			Vous n'avez pas encore ajouté d'adresse dans votre compte client. 
+																																																																																																																																																																						 Pour en ajouter une , veuillez
+			<a href="{{path('account_address_add')}}">cliquez ici</a>
+		</p>
+
+	{% else %}
+		<div class="row ">
+			{% for address in app.user.addresses %}
+				<div class="col-md-5">
+					<div class="card mb-5" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">{{address.name}}</h5>
+							<p class="card-text">{{address.address}}</p>
+							<a href="#" class="btn btn-primary">Modifier</a>
+							<a href="#" class="btn btn-danger">supprimer</a>
+						</div>
+					</div>
 
 
-{% endif %}
-<p class ="mt-5">
-<a class="link text-success" href="{{path('account')}}">retour</a>
- 
-</p>
-<hr>
+				</div>
+
+			{% endfor %}
+		</div>
+
+	{% endif %}
+	<p class="mt-5">
+		<a class="link text-success" href="{{path('account')}}">retour</a>
+
+	</p>
+	<hr>
 
 
 {% endblock %}
