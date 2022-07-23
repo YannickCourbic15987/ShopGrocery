@@ -103,7 +103,7 @@ class OrderController extends AbstractController
                 $this->manager->persist($orderDetails);
             }
 
-            // $this->manager->flush();
+            $this->manager->flush();
             return $this->render('order/addRecap.html.twig', [
                 'siteurl' => $_SERVER['SITE_URL'],
                 'cart' => $cart->getFull(),
