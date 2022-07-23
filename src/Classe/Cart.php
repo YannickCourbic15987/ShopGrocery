@@ -2,6 +2,9 @@
 
 namespace App\Classe;
 
+use App\Entity\Product;
+
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 // use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -9,10 +12,13 @@ class Cart
 {
     private $stack;
 
-    public function __construct(RequestStack $stack)
+
+    public function __construct(RequestStack $stack, EntityManagerInterface $manager)
 
     {
-        return $this->stack = $stack;
+
+        $this->stack = $stack;
+        $this->manager = $manager;
     }
 
     public function addTo($id)
@@ -75,6 +81,29 @@ class Cart
 
         return $session_less->set('cart', $cart);
     }
+
+
+    public function getFull()
+    {
+
+        $cartComplete = [];
+
+        foreach ($this->getTo() as $id => $quantity) {
+            $product_object = $this->manager->getRepository(Product::class)->Find($id);
+
+            if (!$product_object) {
+                $this->deleteTo($id);
+                continue;
+            }
+
+            $cartComplete[] = [
+                'product' => $product_object,
+                'quantity' => $quantity
+            ];
+        }
+        return $cartComplete;
+    }
+
 
     // public function remove()
     // {

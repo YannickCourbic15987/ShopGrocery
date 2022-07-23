@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma commande - ShopGrocery{% endblock %}
+
+{% block content %}
+<h2 class="text-info">Mon Récapitulatif</h2>
+<p>Vérification de vos infomations avant de payer </p>
+<hr>
+
+<div class="row">
+<div class="col-md-6"> 
+
+
+  <h3>Mon adresse de livraison : </h3> <br>
+     {{delivery | raw }}
+  <hr>
+  <h5>Mon transporteur</h5>
+    <h6>{{carrier.name}}</h6>
+    <p>{{carrier.description}}</p>
+    <p>Tarif de livraison : {{carrier.price}} €</p>
+
+
+
+
+</div>
+<div class="col-md-6">
+<b class="mb-3">Ma commande</b><br>
+{% set total = null %}
+{% for product in cart %}
+		
+  <div class="mb-2 mt-2">
+  
+  <img src="{{siteurl}}/uploads/{{product.product.illustration}}" alt="{{product.product.name}}" class="img-fluid rounded-circle border border-dark border-2 mr-2" width="75px" heght="75px">
+  <span class="mr-1">
+  {{product.product.name}}
+               x {{product.quantity}}  : 
+  {{((product.product.price / 100) * product.quantity)| number_format(2 , ',' , '.')}} €
+  </span>
+
+  </div>
+ 	{%  set total = total + ((product.product.price /100) * product.quantity) %}
+{% endfor %}
+   <strong> Sous-total :</strong>
+    {{(total | number_format(2 , ',' , '.') )}} € <br>
+
+   <strong>Livraison :  </strong>
+   {{carrier.price}} €
+   
+   <hr>
+   <strong>Total : {{(total + carrier.price )| number_format(2 , ',' , '.')}} €</strong>
+
+   <a href="" class="btn btn-info btn-block mt-3">  <span class="mr-2">Payez : </span>  {{(total + carrier.price )| number_format(2 , ',' , '.')}} €</a>
+</div>
+</div>
+{% endblock %}
+                                                                                            

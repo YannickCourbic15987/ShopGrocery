@@ -35,6 +35,9 @@ class Order
     #[ORM\OneToMany(mappedBy: 'myOrder', targetEntity: OrderDetails::class)]
     private $orderDetails;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isPaid;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -133,5 +136,28 @@ class Order
         }
 
         return $this;
+    }
+
+    public function isIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
+
+        return $this;
+    }
+
+    public function getTotal()
+    {
+
+        $total = null;
+        foreach ($this->getOrderDetails()->getValues() as $item) {
+            $total = $total + ($item->getPrice() * $item->getQuantity());
+        }
+
+        return $total;
     }
 }

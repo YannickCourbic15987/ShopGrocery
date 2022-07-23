@@ -9,24 +9,41 @@
 
 <div class="row">
 <div class="col-md-6"> 
-<b>Choisir son adresse de livraison</b>
+
 {% set formHtml %}
 
-  {{form(form)}}
+  {{form_start(form ,{action:path('order_recap')}) }}
+  {{form_end(form)}}
     
 {% endset %}
 
 {{formHtml|replace({'[br]' : '</br>'})|raw}}
 
  <br>
-<b>
-Choissir son transporteur
 
-</b> 
+  
+
+
+
+
 </div>
 <div class="col-md-6">
 <b>Récapitulatif de ma commande</b><br>
-<b>bouton pour payer</b>
+{% for product in cart %}
+		
+  <div class="mb-2">
+  
+  <img src="{{siteurl}}/uploads/{{product.product.illustration}}" alt="{{product.product.name}}" class="img-fluid rounded-circle border border-dark border-2 mr-2" width="25px" heght="25px">
+  <span class="mr-1">
+  {{product.product.name}}
+  </span>
+  
+               x {{product.quantity}} <br>
+
+  </div>
+
+{% endfor %}
+
 </div>
 </div>
 {% endblock %}

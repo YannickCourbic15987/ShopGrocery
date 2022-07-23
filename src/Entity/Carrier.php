@@ -62,4 +62,9 @@ class Carrier
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getName() . '[br]' . ' Prix de la livrasion  :  ' . number_format($this->getPrice(), 2, ',', ',') . '€';
+    }
 }
