@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
-use DateTime;
+
+use Stripe\Stripe;
 use App\Classe\Cart;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Entity\OrderDetails;
+use Stripe\Checkout\Session;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,6 +92,12 @@ class OrderController extends AbstractController
             $order->setIsPaid(0);
 
             $this->manager->persist($order);
+
+
+            //lier le stripe avec les produits 
+
+            // $products_for_stripe = [];
+            // $YOUR_DOMAIN = 'http://localhost:3306/public';
             // Enrengistrez mes produits OrderDetails()
 
             foreach ($cart->getFull() as $product) {
@@ -102,13 +110,20 @@ class OrderController extends AbstractController
 
                 $this->manager->persist($orderDetails);
             }
+            // dd($products_for_stripe);
+            // $this->manager->flush();
+            //payment session stripe 
 
-            $this->manager->flush();
+
+            // dump($checkout_session->id);
+            // dd($checkout_session);
+
             return $this->render('order/addRecap.html.twig', [
                 'siteurl' => $_SERVER['SITE_URL'],
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
-                'delivery' => $delivery_content
+                'delivery' => $delivery_content,
+
             ]);
         }
 

@@ -19,7 +19,9 @@
 			<link rel="stylesheet" href="{{asset('asset/css/shopgrocery.css')}}">
 		{% endblock %}
 		<script src="https://kit.fontawesome.com/2bb89bf154.js" crossorigin="anonymous"></script>
-
+         {% block javascripts %}
+			
+		 {% endblock %}
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -199,4 +201,8 @@
 			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 			<script src={{ asset('asset/js/bootstrap.bundle.js') }}></script>
 		</body>
+
+		{% block script %}
+			
+		{% endblock %}
 	</html>
