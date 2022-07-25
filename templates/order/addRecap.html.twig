@@ -53,7 +53,7 @@
    <hr>
    <strong>Total : {{(total + carrier.price )| number_format(2 , ',' , '.')}} €</strong>
 
-   <a  href=" {{ path('stripe_create_session') }}" class="btn btn-info btn-block mt-3" id="checkout-button">  <span class="mr-2">Payez : </span>  {{(total + carrier.price )| number_format(2 , ',' , '.')}} €</a>
+   <a  href=" {{ path('stripe_create_session' , {'reference' : reference}) }}" class="btn btn-info btn-block mt-3" id="checkout-button">  <span class="mr-2">Payez : </span>  {{(total + carrier.price )| number_format(2 , ',' , '.')}} €</a>
 </div>
 </div>
 {% endblock %}
@@ -64,14 +64,20 @@
         var stripe = Stripe['pk_test_51LOxQUG3M2m1aLWJtR5wMMeD5pfI3NYAcG0Uvxibv3aSjAovTZOIIGetxvaLKKKrLmUNhntSd0g5vtcqMuIoUORh00urw8m6Wz'];
         var checkoutButton = document.getElementById("checkout-button");
         checkoutButton.addEventListener("click", function () {
-            fetch("/commande/create-session", {
+            fetch("/commande/create-session/{{reference}}", {
                 method: "POST",
             })
                 .then(function (response) {
                     return response.json();
                 })
                  .then(function (session) {
-                     return stripe.redirectToCheckout({ sessionId: session.id});
+               if(session.error = 'order'){
+                  window.location.replace('{{path('order')}}');
+                      }else{
+                         return stripe.redirectToCheckout({ sessionId: session.id});
+                       }
+
+                     
                  })
                  .then(function (result) {
  

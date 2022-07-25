@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur-Achat-Shop Grocery{% endblock %}
+
+{% block content %}
+
+ <h2 class="text-info"> Erreur de votre paiement </h2>
+  <p>Bonjour {{order.user.firstname}} {{order.user.lastname}} , </p>
+  <p> Il semblerait que votre paiement a échoué  pour votre commande n° {{order.reference}}.</p>
+  <p>Une confimation  d'erreur vient de vous être envoyée par email à l'adresse "{{order.user.email}}".</p>
+  
+  <hr>
+ <a href="{{path('order')}}" class ="btn btn-danger">Réessayer le paiement</a>
+
+{% endblock %}

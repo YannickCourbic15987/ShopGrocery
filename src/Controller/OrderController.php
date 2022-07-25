@@ -55,7 +55,7 @@ class OrderController extends AbstractController
     }
 
 
-    #[Route('/commande/recapitulatif', name: 'order_recap', methods: ['POST'])]
+    #[Route('/commande/recapitulatif', name: 'order_recap', methods: ["POST", "GET"])]
     public function addRecap(Cart $cart, Request $request): Response
     {
 
@@ -70,8 +70,6 @@ class OrderController extends AbstractController
             //Enrengistrez ma commande Order()
             $carriers = $form->get('carriers')->getData();
             $delivery = $form->get('addresses')->getData();
-
-            // dd($carriers);
             $delivery_content = $delivery->getFirstname() . ' ' . $delivery->getLastname();
             $delivery_content .= '<br/>' . $delivery->getPhone();
             if ($delivery->getCompany()) {
@@ -84,6 +82,8 @@ class OrderController extends AbstractController
             // dd($delivery_content);
             $date = new \DateTime();
             $order = new Order();
+            $reference = $date->format('dmY') . '-' . uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setCreateOrder($date);
             $order->setCarrierName($carriers->getName());
@@ -111,18 +111,21 @@ class OrderController extends AbstractController
                 $this->manager->persist($orderDetails);
             }
             // dd($products_for_stripe);
-            // $this->manager->flush();
+            $this->manager->flush();
             //payment session stripe 
 
-
+            // dd($order);
             // dump($checkout_session->id);
             // dd($checkout_session);
+
+            // dd($order);
 
             return $this->render('order/addRecap.html.twig', [
                 'siteurl' => $_SERVER['SITE_URL'],
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
                 'delivery' => $delivery_content,
+                'reference' => $order->getReference()
 
             ]);
         }

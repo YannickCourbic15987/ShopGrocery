@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validation-Achat-Shop Grocery{% endblock %}
+
+{% block content %}
+
+ <h2 class="text-info"> Confirmation de votre commande </h2>
+  <p>Bonjour {{order.user.firstname}} {{order.user.lastname}} , </p>
+  <p> Nous vous remercions pour votre commande n° {{order.reference}}.</p>
+  <p>Une confimation vient de vous être envoyée par email à l'adresse "{{order.user.email}}".</p>
+  <hr>
+  <h5 class="text-primary">Votre commande sera livrée par {{order.carrierName}}</h5>
+  <p class="text-success"> <span class="text-uppercase ">à</span> l'adresse suivante : </p>
+  <p>{{order.delivery|raw}}</p>
+  <hr>
+  <p>Pour suivre votre commande, rendez vous dans votre <a href="{{'account'}}">compte</a></p>
+
+{% endblock %}
