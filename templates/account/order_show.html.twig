@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Ma commande - Shop Grocery
+{% endblock %}
+
+{% block content %}
+	<h1 class="text-secondary">
+		Ma commande {{order.reference}}
+	</h1>
+	<p class="text-info">
+		Détail de votre commande : <br>
+    <a href="{{path('account_order')}}"> retour </a>
+    </p>
+	<hr>
+    <p>Commande passé le : {{order.createOrder | date('d/m/Y')}}</p>
+    <p>Référence de sa commande : {{order.reference}}</p>
+    <P>Tranporteur choisie : {{order.carrierName}} </P>
+    <p> Frais de Port appliquée : {{(order.carrierPrice / 100 ) }} €</p>
+    <hr>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Produit</th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Prix unitaire</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% set total = null %}
+  {% for product in order.orderDetails %}
+    <tr>
+
+      <td>{{product.product}}</td>
+      <td> x {{product.quantity}}</td>
+      <td>{{(product.price / 100 ) | number_format(2 , ',' , '.')}} € </td>
+      <td>{{( product.total   / 100 ) | number_format(2 , ',' , '.')}} €</td>
+    </tr>
+    {%  set total = total + ((product.price / 100) * product.quantity) %}
+    
+  {% endfor %}
+  </tbody>
+</table>
+    <hr>
+<p> <strong>Sous-total :</strong> {{total}} € </p>
+<p> <strong>Prix général : </strong> {{total + (order.carrierPrice / 100) }} € </p>
+
+   
+     
+
+{% endblock %}

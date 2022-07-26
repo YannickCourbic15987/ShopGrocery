@@ -21,7 +21,7 @@
   <h5>Mon transporteur</h5>
     <h6>{{carrier.name}}</h6>
     <p>{{carrier.description}}</p>
-    <p>Tarif de livraison : {{carrier.price}} €</p>
+    <p>Tarif de livraison : {{carrier.price / 100}} €</p>
 
 
 
@@ -45,15 +45,15 @@
  	{%  set total = total + ((product.product.price /100) * product.quantity) %}
 {% endfor %}
    <strong> Sous-total :</strong>
-    {{(total | number_format(2 , ',' , '.') )}} € <br>
+    {{((total) | number_format(2 , ',' , '.') )}} € <br>
 
    <strong>Livraison :  </strong>
-   {{carrier.price}} €
+   {{carrier.price / 100}} €
    
    <hr>
-   <strong>Total : {{(total + carrier.price )| number_format(2 , ',' , '.')}} €</strong>
+   <strong>Total : {{(total + (carrier.price / 100) )| number_format(2 , ',' , '.')}} €</strong>
 
-   <a  href=" {{ path('stripe_create_session' , {'reference' : reference}) }}" class="btn btn-info btn-block mt-3" id="checkout-button">  <span class="mr-2">Payez : </span>  {{(total + carrier.price )| number_format(2 , ',' , '.')}} €</a>
+   <a  href=" {{ path('stripe_create_session' , {'reference' : reference}) }}" class="btn btn-info btn-block mt-3" id="checkout-button">  <span class="mr-2">Payez : </span>  {{(total + (carrier.price / 100) )| number_format(2 , ',' , '.')}} €</a>
 </div>
 </div>
 {% endblock %}

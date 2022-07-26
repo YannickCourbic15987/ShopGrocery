@@ -65,6 +65,6 @@ class Carrier
 
     public function __toString()
     {
-        return $this->getName() . '[br]' . ' Prix de la livrasion  :  ' . number_format($this->getPrice(), 2, ',', ',') . '€';
+        return $this->getName() . '[br]' . ' Prix de la livrasion  :  ' . number_format(($this->getPrice() / 100), 2, ',', ',') . '€';
     }
 }
